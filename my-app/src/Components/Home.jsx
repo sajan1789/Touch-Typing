@@ -1,10 +1,14 @@
 import React from 'react'
 import { useState ,useRef} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { startTest,startTime,stopTime } from '../Redux/touchTyping/action'
-
+import { startTest,startTime,stopTime } from '../Redux/touchTyping/action' 
+// import '../Styles/Home.css'  
+import '../Styles/Home.css'
 const Home = () => {
     const [input,setInput]=useState("")
+    const [showtimer,setShowtimer]=useState("")
+    let intervalId;
+    const [timeSpend,setTimespend]=useState(0)
     // const [InputDisabled,setInputDisabled] = useState(false);
     const [msg,setMsg]=useState("")
     const [type,setType]=useState("")
@@ -17,27 +21,56 @@ const Home = () => {
     const endingTime=+useSelector((s)=>s.reducer.endingTime)
     // console.log(startTime,endingTime)
     const dispatch = useDispatch();
+    const  showTimer=()=>{
+
+        
+             intervalId=setInterval(()=>{
+                    setTimespend(prev=>prev+1)
+                
+                  },1000)
+    }
     const startTyping=()=>{
     
         inputRef.current.focus();
         let randomIndex=Math.floor(Math.random()*text.length) 
         setType(text[randomIndex]) 
-        
+        setMsg("")
         dispatch(startTime(performance.now()))
-        setStart("Done")
+       
+         showTimer();
 
+    }
+    const errorcheck=(word)=>{
+          let num=0
+          let str=type
+          str=str.trim().split(" ")
+          let str2=input
+          str2=str2.trim().split(" ")
+          for(let i=0;i<str2.length;i++){
+            if(str2[i]===str[i]){
+                num++
+            }
+          }
+          return num
     }
     const calculateSpeed=()=>{
             let correct_word=input.trim()==='' ? 0: input.trim().split(" ").length
+            let str=type
+          str=str.trim().split(" ")
+            let a=errorcheck()
+           let accuracy=Math.ceil((a/str.length)*100)
             if(correct_word!==0){
-                let speed=(correct_word/(-1*Math.ceil((endingTime-startingTime)/1000))*60)
-               setMsg(`Your speed is ${speed} per minutes`)
+                let speed=Math.ceil( ( correct_word/(-1*Math.ceil((endingTime-startingTime)/1000))*60))
+               setMsg(`Your speed is ${speed} word per minutes and accuracy is ${accuracy} %`)
             }
+            // else{
+            //     setMsg('You must have to type first')
+            // }
     }
      const stopTyping=()=>{
         
         dispatch(stopTime(performance.now()))
-        console.log( -1*Math.ceil((endingTime-startingTime)/1000))
+        // console.log( -1*Math.ceil((endingTime-startingTime)/1000))
             setStart("Start")
             calculateSpeed()
             setType("")
@@ -47,33 +80,37 @@ const Home = () => {
     const startGame=()=>{
          switch (start) {
             case "Start": 
-            
+            setStart("Done")
             inputRef.current.focus();  
            
             startTyping()
             
               break;
               case "Done":
+             clearInterval(intervalId)
+            
               setMsg("")
                 stopTyping()
-                 
-
          }
           
          }
   return (
-    <div>
-        <div>
-            <h2>{msg}</h2>
-            <h2>{type}</h2>
+    
+        <div className='mainDiv'>
+            <div className='centerDiv'>
+               <h1 >Welcome To Typing Speed Test</h1>
+               <div className='timer-div'>
+                <p className='show-time'>{timeSpend}</p>
+               </div>
+               <h2>{msg}</h2>
+               {type && <h2>Type 👉 {type}</h2>} 
+               <input className='typeArea' type="text" value={input} onChange={(e)=>setInput(e.target.value)} ref={inputRef} />
+               <br />
+               <button className='mainBtn' onClick={startGame}>{start}</button>
+            </div>
         </div>
-        <div>
-            <input type="text" value={input} onChange={(e)=>setInput(e.target.value)} ref={inputRef} />
-        </div>
-        <div>
-            <button onClick={startGame}>{start}</button>
-        </div>
-    </div>
+       
+    
   )
 }
 
