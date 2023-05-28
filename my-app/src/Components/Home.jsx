@@ -1,8 +1,7 @@
 import React from 'react'
 import { useState ,useRef} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { startTest,startTime,stopTime } from '../Redux/touchTyping/action' 
-// import '../Styles/Home.css'  
+import { startTest,startTime,stopTime } from '../Redux/touchTyping/action'  
 import '../Styles/Home.css'
 const Home = () => {
     const [input,setInput]=useState("")
@@ -66,9 +65,11 @@ const Home = () => {
                clearInterval(intervalId)
                setTimespend(0)
             }
-            // else{
-            //     setMsg('You must have to type first')
-            // }
+            else{
+                setMsg('You must have to type first')
+                clearInterval(intervalId)
+               setTimespend(0)
+            }
     }
      const stopTyping=()=>{
         
@@ -95,7 +96,7 @@ const Home = () => {
               setMsg("")
                 stopTyping()
          }
-          
+            
          }
   return (
     

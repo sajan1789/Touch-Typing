@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main{
+      height: 60px;
+      padding: 20px;
+      /* margin-bottom: 20px; */
+      background-color: rgb(150 209 213);
+      color: white;
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 15px;
+}
+.main>h2{
+    margin-right: 60px;
+}
+.main>h2:hover{
+    cursor: pointer;
+}
+img{
+    
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    
+    align-items: center;
+    /* margin-right: 10px; */
+    margin-top: -5px;
+}
+
+                                      
