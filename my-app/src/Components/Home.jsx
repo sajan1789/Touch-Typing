@@ -7,7 +7,7 @@ import '../Styles/Home.css'
 const Home = () => {
     const [input,setInput]=useState("")
     const [showtimer,setShowtimer]=useState("")
-    let intervalId;
+    const [intervalId, setIntervalId] = useState(null);
     const [timeSpend,setTimespend]=useState(0)
     // const [InputDisabled,setInputDisabled] = useState(false);
     const [msg,setMsg]=useState("")
@@ -24,10 +24,11 @@ const Home = () => {
     const  showTimer=()=>{
 
         
-             intervalId=setInterval(()=>{
+           const Id=setInterval(()=>{
                     setTimespend(prev=>prev+1)
                 
                   },1000)
+                  setIntervalId(Id)
     }
     const startTyping=()=>{
     
@@ -62,6 +63,8 @@ const Home = () => {
             if(correct_word!==0){
                 let speed=Math.ceil( ( correct_word/(-1*Math.ceil((endingTime-startingTime)/1000))*60))
                setMsg(`Your speed is ${speed} word per minutes and accuracy is ${accuracy} %`)
+               clearInterval(intervalId)
+               setTimespend(0)
             }
             // else{
             //     setMsg('You must have to type first')
