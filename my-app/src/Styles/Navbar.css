@@ -6,7 +6,7 @@
 .main{
       height: 60px;
       padding: 20px;
-      /* margin-bottom: 20px; */
+    
       background-color: rgb(150 209 213);
       color: white;
       display: flex;
@@ -26,7 +26,7 @@ img{
     width: 40px;
     
     align-items: center;
-    /* margin-right: 10px; */
+
     margin-top: -5px;
 }
 

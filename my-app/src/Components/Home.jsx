@@ -8,7 +8,7 @@ const Home = () => {
     const [showtimer,setShowtimer]=useState("")
     const [intervalId, setIntervalId] = useState(null);
     const [timeSpend,setTimespend]=useState(0)
-    // const [InputDisabled,setInputDisabled] = useState(false);
+  
     const [msg,setMsg]=useState("")
     const [type,setType]=useState("")
     const [start,setStart]=useState("Start")
@@ -18,7 +18,7 @@ const Home = () => {
     const text=useSelector((s)=>s.reducer.text)
     const startingTime=+useSelector((s)=>s.reducer.startingTime)
     const endingTime=+useSelector((s)=>s.reducer.endingTime)
-    // console.log(startTime,endingTime)
+
     const dispatch = useDispatch();
     const  showTimer=()=>{
 
@@ -74,7 +74,7 @@ const Home = () => {
      const stopTyping=()=>{
         
         dispatch(stopTime(performance.now()))
-        // console.log( -1*Math.ceil((endingTime-startingTime)/1000))
+      
             setStart("Start")
             calculateSpeed()
             setType("")
